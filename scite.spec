@@ -1,5 +1,5 @@
 %define name 	scite
-%define version 1.71
+%define version 1.74
 %define release %mkrel 1
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
@@ -14,6 +14,7 @@ Url: 		http://www.scintilla.org/SciTE.html
 Source: 	scite%scitever.tar.bz2
 BuildRoot: 	%{_tmppath}/%{name}-root
 BuildRequires: 	gtk+2-devel pkgconfig
+BuildRequires:	desktop-file-utils
 
 %description
 SciTE is a GTK based single-document editor.  While its features are
@@ -38,24 +39,18 @@ make GTK2=1
 mkdir -p $RPM_BUILD_ROOT/%_bindir
 mkdir -p $RPM_BUILD_ROOT/%_datadir/%name
 mkdir -p $RPM_BUILD_ROOT/%_datadir/pixmaps
-mkdir -p $RPM_BUILD_ROOT/%_datadir/gnome/apps/Applications
+mkdir -p $RPM_BUILD_ROOT/%_datadir/applications
 mkdir -p $RPM_BUILD_ROOT/%_mandir/man1
 cp bin/SciTE $RPM_BUILD_ROOT/%_bindir
 cp src/*.properties $RPM_BUILD_ROOT/%_datadir/%name
-cp gtk/SciTE.desktop $RPM_BUILD_ROOT/%_datadir/gnome/apps/Applications
+cp gtk/SciTE.desktop $RPM_BUILD_ROOT/%_datadir/applications
 cp gtk/Sci48M.png $RPM_BUILD_ROOT/%_datadir/pixmaps
 cp doc/%name.1 $RPM_BUILD_ROOT/%_mandir/man1
 
-# menu
-install -d $RPM_BUILD_ROOT%{_menudir}
-cat << EOF > $RPM_BUILD_ROOT%{_menudir}/%{name}
-?package(%{name}):command="SciTE"\
-needs="x11"\
-section="More Applications/Editors"\
-title="SciTE"\
-icon="editors_section.png"\
-longtitle="Scintilla Text Editor"
-EOF
+desktop-file-install --vendor='' \
+	--dir=%buildroot%_datadir/applications \
+	--remove-category='Application' \
+	%buildroot%_datadir/applications/*.desktop
 
 %clean
 rm -fr $RPM_BUILD_ROOT
@@ -70,10 +65,7 @@ rm -fr $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %doc doc/*
 %_bindir/SciTE
-%_datadir/%name/*
+%_datadir/%name
 %_datadir/pixmaps/*
-%_datadir/gnome/apps/Applications/*
+%_datadir/applications/*
 %_mandir/man1/*
-%_menudir/%name
-
-
