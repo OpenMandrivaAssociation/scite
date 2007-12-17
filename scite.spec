@@ -12,7 +12,6 @@ License: 	BSD
 Group: 		Editors
 Url: 		http://www.scintilla.org/SciTE.html
 Source: 	scite%scitever.tar.bz2
-BuildRoot: 	%{_tmppath}/%{name}-root
 BuildRequires: 	gtk+2-devel pkgconfig
 BuildRequires:	desktop-file-utils
 
