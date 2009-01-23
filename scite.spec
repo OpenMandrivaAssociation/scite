@@ -1,6 +1,6 @@
 %define name 	scite
-%define version 1.74
-%define release %mkrel 4
+%define version 1.77
+%define release %mkrel 1
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
 
