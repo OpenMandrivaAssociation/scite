@@ -1,5 +1,5 @@
 %define name 	scite
-%define version 1.77
+%define version 1.78
 %define release %mkrel 1
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
@@ -11,7 +11,7 @@ Release: 	%{release}
 License: 	BSD
 Group: 		Editors
 Url: 		http://www.scintilla.org/SciTE.html
-Source: 	scite%scitever.tar.bz2
+Source: 	http://prdownloads.sourceforge.net/scintilla/scite%scitever.tgz
 BuildRoot: 	%{_tmppath}/%{name}-root
 BuildRequires: 	gtk+2-devel pkgconfig
 BuildRequires:	desktop-file-utils
@@ -33,7 +33,7 @@ perl -p -i -e "s/-Os/$RPM_OPT_FLAGS/g" makefile
 perl -p -i -e 's/netscape/www-browser/g' ../src/Embedded.properties
 perl -p -i -e 's/netscape/www-browser/g' ../src/html.properties
 perl -p -i -e 's/netscape/www-browser/g' ../src/SciTEGlobal.properties
-make GTK2=1
+make GTK2=1 CC="g++ %{ldflags}"
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%_bindir
