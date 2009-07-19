@@ -19,6 +19,7 @@ BuildRoot: 	%{_tmppath}/%{name}-root
 BuildRequires: 	gtk+2-devel pkgconfig
 BuildRequires:	desktop-file-utils
 BuildRequires:	cmake >= 2.6
+BuildRequires:	lua-devel >= 5.1
 
 %description
 SciTE is a GTK based single-document editor.  While its features are
