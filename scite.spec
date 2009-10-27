@@ -1,6 +1,6 @@
 %define name 	scite
 %define version 1.79
-%define release %mkrel 2
+%define release %mkrel 3
 %define libname %mklibname scintilla 0
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
@@ -31,12 +31,10 @@ text highlighting and formatting engine.
 %setup -q -n scite
 cp %SOURCE1 $RPM_BUILD_DIR/scite/CMakeLists.txt
 rm -fr $RPM_BUILD_DIR/scintilla
+perl -p -i -e 's/netscape/www-browser/g' src/Embedded.properties
+perl -p -i -e 's/netscape/www-browser/g' src/SciTEGlobal.properties
 
 %build
-perl -p -i -e 's/netscape/www-browser/g' ../src/Embedded.properties
-perl -p -i -e 's/netscape/www-browser/g' ../src/html.properties
-perl -p -i -e 's/netscape/www-browser/g' ../src/SciTEGlobal.properties
-
 %{cmake}
 %make
 
