@@ -1,6 +1,6 @@
 %define name 	scite
 %define version 1.79
-%define release %mkrel 3
+%define release %mkrel 4
 %define libname %mklibname scintilla 0
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
