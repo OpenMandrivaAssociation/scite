@@ -1,7 +1,6 @@
 %define name 	scite
 %define version 1.79
-%define release %mkrel 4
-%define libname %mklibname scintilla 0
+%define release %mkrel 5
 
 %define scitever %(echo %{version} | sed -e 's/\\.//')
 
@@ -14,13 +13,13 @@ Group: 		Editors
 Url: 		http://www.scintilla.org/SciTE.html
 Source: 	http://prdownloads.sourceforge.net/scintilla/scite%scitever.tgz
 Source1:	scite.cmake
-Requires:	%{libname} >= %version
 BuildRoot: 	%{_tmppath}/%{name}-root
 BuildRequires: 	gtk+2-devel pkgconfig
 BuildRequires:	desktop-file-utils
 BuildRequires:	cmake >= 2.6
 BuildRequires:	lua-devel >= 5.1
 BuildRequires:	scintilla-devel >= 1.79
+BuildRequires:	perl
 
 %description
 SciTE is a GTK based single-document editor.  While its features are
