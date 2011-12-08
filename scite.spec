@@ -28,8 +28,8 @@ text highlighting and formatting engine.
 
 %prep
 %setup -q -n scite
-cp %SOURCE1 $RPM_BUILD_DIR/scite/CMakeLists.txt
-rm -fr $RPM_BUILD_DIR/scintilla
+cp %SOURCE1 %{_builddir}/scite/CMakeLists.txt
+rm -fr %{_builddir}/scintilla
 perl -p -i -e 's/netscape/www-browser/g' src/Embedded.properties
 perl -p -i -e 's/netscape/www-browser/g' src/SciTEGlobal.properties
 
