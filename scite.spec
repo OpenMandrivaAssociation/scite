@@ -1,70 +1,82 @@
-%define name 	scite
-%define version 1.79
-%define release %mkrel 6
+%define		_version	322
+Name:		scite
+Version:	3.2.2
+Release:	%mkrel 2
+Summary:	SCIntilla based GTK3 text editor
+License:	MIT
+Group:		Editors
+Source0:	http://download.sourceforge.net/scintilla/%{name}%{_version}.tgz
+Patch0:		%{name}-desktopfile.patch
 
-%define scitever %(echo %{version} | sed -e 's/\\.//')
+Url:		http://www.scintilla.org/SciTE.html
 
-Summary: 	GTK text editor based on scintilla
-Name: 		%{name}
-Version: 	%{version}
-Release: 	%{release}
-License: 	BSD
-Group: 		Editors
-Url: 		http://www.scintilla.org/SciTE.html
-Source: 	http://prdownloads.sourceforge.net/scintilla/scite%scitever.tgz
-Source1:	scite.cmake
-BuildRoot: 	%{_tmppath}/%{name}-root
-BuildRequires: 	gtk+2-devel pkgconfig
+BuildRequires:	gtk+3-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	cmake >= 2.6
-BuildRequires:	lua-devel >= 5.1
-BuildRequires:	scintilla-devel >= 1.79
-BuildRequires:	perl
+
+Requires:       gtk+3.0
 
 %description
-SciTE is a GTK based single-document editor.  While its features are
-limited, its main purpose is to show off scintilla, an extensible
-text highlighting and formatting engine.
+SciTE is a SCIntilla based Text Editor. Originally built to demonstrate
+Scintilla, it has grown to be a generally useful editor with facilities for
+building and running programs.
 
 %prep
-%setup -q -n scite
-cp %SOURCE1 %{_builddir}/scite/CMakeLists.txt
-rm -fr %{_builddir}/scintilla
-perl -p -i -e 's/netscape/www-browser/g' src/Embedded.properties
-perl -p -i -e 's/netscape/www-browser/g' src/SciTEGlobal.properties
+%setup -q -c
+%patch0 -p1 -b .desktopfile
 
 %build
-%{cmake}
-%make
+%make OPTFLAGS="%{optflags}" GTK3=1 -C scintilla/gtk
+%make OPTFLAGS="%{optflags}" GTK3=1 -C scite/gtk
+#%make OPTFLAGS="%{optflags}" -C scintilla/gtk
+#%make OPTFLAGS="%{optflags}" -C scite/gtk
 
 %install
-rm -fr $RPM_BUILD_ROOT
-cd build
-%{makeinstall_std}
+rm -rf %{buildroot}
+%makeinstall_std GTK3=1 -C scite/gtk
+ln -s SciTE %{buildroot}%{_bindir}/scite
 
-desktop-file-install --vendor='' \
-	--dir=%buildroot%_datadir/applications \
-	--remove-category='Application' \
-	%buildroot%_datadir/applications/*.desktop
+# include man-page
+mkdir -p %{buildroot}%{_mandir}/man1/
+mv scite/doc/scite.1 %{buildroot}%{_mandir}/man1/
 
-%clean
-rm -fr $RPM_BUILD_ROOT
-
-%if %mdkversion < 200900
-%post
-%update_menus
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%endif
+desktop-file-validate %{buildroot}%{_datadir}/applications/SciTE.desktop
 
 %files
-%defattr(-,root,root)
-%doc doc/*
-%_bindir/SciTE
-%_datadir/%name
-%_datadir/pixmaps/*
-%_datadir/applications/*
-%_mandir/man1/*
+%doc scite/README scite/License.txt
+%{_mandir}/man1/scite.1*
+%{_bindir}/SciTE
+%{_bindir}/scite
+%{_datadir}/scite/
+%{_datadir}/pixmaps/*
+%{_datadir}/applications/*
+
+
+%changelog
+
+* Wed Sep 12 2012 matteo <matteo> 3.2.2-1.mga3
++ Revision: 292471
+- new version
+
+* Tue May 01 2012 matteo <matteo> 3.1.0-1.mga2
++ Revision: 234439
+- new version
+  - upstream includes fix to scroll mask bug
+  - few other bugs fixed
+
+* Fri Apr 13 2012 matteo <matteo> 3.0.4-1.mga2
++ Revision: 230564
+- deleted wrong patch of the gtk makefile
+- fixed makeinstall_std arguments
+- spec file cleaned
+- fixed gtk makefile bug not allowing desktop file installation
+- added desktop file patch
+- fixed mouse wheel scroll bug
+- new version
+  - built against gtk3 rather than gtk2
+- new version
+
+* Wed Sep 28 2011 matteo <matteo> 2.29-1.mga2
++ Revision: 149694
+- upgrade to 2.29
+- replaced commands with macros
+- imported package scite
