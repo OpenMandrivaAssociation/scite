@@ -1,7 +1,7 @@
 %define		_version	322
 Name:		scite
 Version:	3.2.2
-Release:	%mkrel 2
+Release:	3
 Summary:	SCIntilla based GTK3 text editor
 License:	MIT
 Group:		Editors
