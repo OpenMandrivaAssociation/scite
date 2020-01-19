@@ -1,12 +1,11 @@
-%define		_version	322
+%define		_version	430
 Name:		scite
-Version:	4.2.0
+Version:	4.3.0
 Release:	1
 Summary:	SCIntilla based GTK3 text editor
 License:	MIT
 Group:		Editors
 Source0:	http://download.sourceforge.net/scintilla/%{name}%{_version}.tgz
-Patch0:		%{name}-desktopfile.patch
 
 Url:		http://www.scintilla.org/SciTE.html
 
@@ -22,7 +21,6 @@ building and running programs.
 
 %prep
 %setup -q -c
-%patch0 -p1 -b .desktopfile
 
 %build
 %make OPTFLAGS="%{optflags}" GTK3=1 -C scintilla/gtk
@@ -32,14 +30,12 @@ building and running programs.
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std GTK3=1 -C scite/gtk
+%make_install GTK3=1 -C scite/gtk
 ln -s SciTE %{buildroot}%{_bindir}/scite
 
 # include man-page
 mkdir -p %{buildroot}%{_mandir}/man1/
 mv scite/doc/scite.1 %{buildroot}%{_mandir}/man1/
-
-desktop-file-validate %{buildroot}%{_datadir}/applications/SciTE.desktop
 
 %files
 %doc scite/README scite/License.txt
