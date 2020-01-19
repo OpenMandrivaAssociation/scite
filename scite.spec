@@ -1,6 +1,6 @@
-%define		_version	322
+%define		_version	430
 Name:		scite
-Version:	4.2.0
+Version:	4.3.0
 Release:	1
 Summary:	SCIntilla based GTK3 text editor
 License:	MIT
@@ -32,7 +32,7 @@ building and running programs.
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std GTK3=1 -C scite/gtk
+%make_install GTK3=1 -C scite/gtk
 ln -s SciTE %{buildroot}%{_bindir}/scite
 
 # include man-page
