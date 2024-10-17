@@ -7,7 +7,7 @@ License:	MIT
 Group:		Editors
 Source0:	http://download.sourceforge.net/scintilla/%{name}%{_version}.tgz
 
-Url:		http://www.scintilla.org/SciTE.html
+Url:		https://www.scintilla.org/SciTE.html
 
 BuildRequires:	gtk+3-devel
 BuildRequires:	desktop-file-utils
