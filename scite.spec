@@ -9,6 +9,7 @@ Source0:	http://download.sourceforge.net/scintilla/%{name}%{_version}.tgz
 
 Url:		https://www.scintilla.org/SciTE.html
 
+BuildRequires:	make
 BuildRequires:	gtk+3-devel
 BuildRequires:	desktop-file-utils
 
