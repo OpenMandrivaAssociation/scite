@@ -1,6 +1,6 @@
 %define		_version	432
 Name:		scite
-Version:	4.3.2
+Version:	5.6.4
 Release:	1
 Summary:	SCIntilla based GTK3 text editor
 License:	MIT
